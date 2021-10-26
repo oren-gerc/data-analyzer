@@ -1,0 +1,10 @@
+{
+  "x_column_name": "t",
+  "y_column_name": "<r^2>",
+  "x_error_column_name": "error t",
+  "y_error_column_name": "error <r^2>",
+  "x_label": "Average Squared Distance from Origin",
+  "y_label": "Time",
+  "graph_title": "Average Squared Distance from Origin vs. Time",
+  "fit_equation": "linear"
+}
