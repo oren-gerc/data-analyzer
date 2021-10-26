@@ -1,9 +1,9 @@
-import numpy as np
-import pandas as pd
-from datetime import datetime
+"""
+Holds general functions
+"""
+
 import plotly.io as pio
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
 import scipy.optimize as opt
 
 pio.templates["custom"] = go.layout.Template(layout=go.Layout(margin=dict(l=20, r=20, t=40, b=0)))
@@ -96,5 +96,3 @@ def curve_fit(func, x, y):
     # returns the parameters and the y values for the fit curve
     parameters, params_cov = opt.curve_fit(func, x, y)
     return parameters, func(x, *parameters)
-
-

@@ -1,8 +1,12 @@
-import matplotlib.pyplot as plt
+"""
+Performs data analysis of Brownian Motiom experiment - week 1
+"""
+
+import utils
+import equations
 import numpy as np
 import pandas as pd
-# from scipy.optimize import curve_fit
-import utils
+import matplotlib.pyplot as plt
 
 
 def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
@@ -53,10 +57,6 @@ def build_particle_path_from_excel():
     return b_path, column_errors
 
 
-def linear(t, a, b):
-    return b + a * t
-
-
 def plot_curve_with_fit_and_errors(test, x, error_x, y, error_y):
     params, y_fit = utils.curve_fit(test, x, y)
     utils.plot_with_fit_and_errors(x, error_x, y, error_y, y_fit, "Time [s]", "<r^2> [m^2]",
@@ -94,5 +94,5 @@ if __name__ == '__main__':
     r_2 = calc_average_r_squared(path)
     error_t = np.zeros(shape=r_2.shape)
     error_r = calc_r_squared_error(path[:, 0], path[:, 1], errors[:, 0], errors[:, 1])
-    plot_curve_with_fit(linear, time, r_2)
-    plot_curve_with_fit_and_errors(linear, time, error_t, r_2, error_r)
+    plot_curve_with_fit(equations.linear, time, r_2)
+    plot_curve_with_fit_and_errors(equations.linear, time, error_t, r_2, error_r)
