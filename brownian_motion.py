@@ -8,6 +8,19 @@ import numpy as np
 from scipy.stats import linregress
 
 
+def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
+    N = round(T / dt) + 1
+    t = np.linspace(0, T, N)
+    W = np.random.standard_normal(size=(N - 1, dims))  # create random (x,y) steps
+    origin = np.zeros((1, dims))
+    steps = np.concatenate([origin, W]).cumsum(0) / np.sqrt(dt)
+    drift_x = ((mu_x - (sigma ** 2 / 2)) * t).reshape((N, 1))
+    drift_y = ((mu_y - (sigma ** 2 / 2)) * t).reshape((N, 1))
+    drift = np.concatenate([drift_x, drift_y], axis=1)
+    drifted_path = sigma * steps + drift
+    return drifted_path
+
+
 def drop_drift(x, y, time):
     slope_x, intercept, r, p, se = linregress(time, x)
     slope_y, intercept, r, p, se = linregress(time, y)
@@ -35,6 +48,7 @@ def analyze_week1():
     for particle in range(1, 6):
         excel_path = r'C:\Users\user\Desktop\lab\physics-data-analyzer\experiment_data\particle{}.xlsx'.format(
             particle)
+        frames_per_second = 30
 
         # read and normalize data
         x, y, x_error, y_error = utils.read_data(excel_path)
@@ -42,7 +56,7 @@ def analyze_week1():
 
         # plot trajectory of the particle
         utils.plot(x, y, "x", "y", "2D trajectory of the particle #{}".format(particle))
-        time = np.linspace(0, x.shape[0], num=x.shape[0])
+        time = np.linspace(0, x.shape[0], num=x.shape[0]) / frames_per_second
 
         # numerically check for drift in both axes, than normalize values
         # trajectory[:, 0], trajectory[:, 1] = drop_drift(trajectory[:, 0], trajectory[:, 1], time)

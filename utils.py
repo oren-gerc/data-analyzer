@@ -13,6 +13,8 @@ import os
 pio.templates["custom"] = go.layout.Template(layout=go.Layout(margin=dict(l=20, r=20, t=40, b=0)))
 pio.templates.default = "simple_white+custom"
 
+SHOW_GRAPHS = False
+
 
 def read_data(csv_path):
     data = pd.read_excel(csv_path)
@@ -33,7 +35,8 @@ def plot(x, y, x_label, y_label, graph_title):
                          xaxis={"title": x_label},
                          yaxis={"title": y_label},
                          height=400))
-    fig.show()
+    if SHOW_GRAPHS:
+        fig.show()
 
 
 def plot_motion(path):
@@ -63,14 +66,15 @@ def plot_with_fit(x, y, y_fit, fit_params, x_label, y_label, graph_title):
                          xaxis={"title": x_label},
                          yaxis={"title": y_label},
                          height=400))
-    fig.show()
+    if SHOW_GRAPHS:
+        fig.show()
     if not os.path.exists("graphs"):
         os.mkdir("graphs")
     fig.write_image("graphs/{}.png".format(graph_title))
     print(graph_title, "fit parameters: ", fit_params)
 
 
-def plot_with_fit_and_errors(x, x_error, y, y_error, y_fit, fit_params, x_label, y_label, graph_title):
+def plot_with_fit_and_errors(x, x_error, y, y_error, y_fit, x_label, y_label, graph_title):
     fig = go.Figure(
         [go.Scatter(x=x, y=y,
                     error_x=dict(type='data', array=x_error, thickness=0.06, visible=True),
@@ -85,34 +89,16 @@ def plot_with_fit_and_errors(x, x_error, y, y_error, y_fit, fit_params, x_label,
                          xaxis={"title": x_label},
                          yaxis={"title": y_label},
                          height=400))
-    fig.show()
+    if SHOW_GRAPHS:
+        fig.show()
     if not os.path.exists("graphs"):
         os.mkdir("graphs")
     fig.write_image("graphs/{}.png".format(graph_title))
 
 
-def curve_fit(func, x, y):
-    # returns the parameters and the y values for the fit curve
-    parameters, params_cov = opt.curve_fit(func, x, y)
-    return parameters, func(x, *parameters)
-
-
-def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
-    N = round(T / dt) + 1
-    t = np.linspace(0, T, N)
-    W = np.random.standard_normal(size=(N - 1, dims))  # create random (x,y) steps
-    origin = np.zeros((1, dims))
-    steps = np.concatenate([origin, W]).cumsum(0) / np.sqrt(dt)
-    drift_x = ((mu_x - (sigma ** 2 / 2)) * t).reshape((N, 1))
-    drift_y = ((mu_y - (sigma ** 2 / 2)) * t).reshape((N, 1))
-    drift = np.concatenate([drift_x, drift_y], axis=1)
-    drifted_path = sigma * steps + drift
-    return drifted_path
-
-
 def plot_curve_with_fit_and_errors(test, x, error_x, y, error_y, num):
     params, y_fit = curve_fit(test, x, y)
-    plot_with_fit_and_errors(x, error_x, y, error_y, y_fit, params, "Time [s]", "<r^2> [m^2]",
+    plot_with_fit_and_errors(x, error_x, y, error_y, y_fit, "Time [s]", "<r^2> [m^2]",
                              "Average Squared Distance vs. Time, particle #{}, with errors".format(num))
 
 
@@ -125,3 +111,9 @@ def plot_curve_with_fit(test, x, y, num):
 def normalize_values(vec):
     # normalizes the x and y values to start with zero
     return vec - vec[0]
+
+
+def curve_fit(func, x, y):
+    # returns the parameters and the y values for the fit curve
+    parameters, params_cov = opt.curve_fit(func, x, y)
+    return parameters, func(x, *parameters)
