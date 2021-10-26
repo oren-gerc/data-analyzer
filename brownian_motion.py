@@ -1,7 +1,6 @@
 """
 Performs data analysis - brownian motion experiment
 """
-import matplotlib.pyplot as plt
 import utils
 import equations
 import numpy as np
