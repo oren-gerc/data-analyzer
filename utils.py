@@ -8,6 +8,7 @@ import scipy.optimize as opt
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import os
 
 pio.templates["custom"] = go.layout.Template(layout=go.Layout(margin=dict(l=20, r=20, t=40, b=0)))
 pio.templates.default = "simple_white+custom"
@@ -63,6 +64,9 @@ def plot_with_fit(x, y, y_fit, x_label, y_label, graph_title):
                          yaxis={"title": y_label},
                          height=400))
     fig.show()
+    if not os.path.exists("graphs"):
+        os.mkdir("graphs")
+    fig.write_image("graphs/{}.png".format(graph_title))
 
 
 def plot_with_fit_and_errors(x, x_error, y, y_error, y_fit, x_label, y_label, graph_title):
@@ -81,6 +85,9 @@ def plot_with_fit_and_errors(x, x_error, y, y_error, y_fit, x_label, y_label, gr
                          yaxis={"title": y_label},
                          height=400))
     fig.show()
+    if not os.path.exists("graphs"):
+        os.mkdir("graphs")
+    fig.write_image("graphs/{}.png".format(graph_title))
 
 
 def curve_fit(func, x, y):
@@ -102,26 +109,20 @@ def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
     return drifted_path
 
 
-def calc_average_r_squared(brownian_path):
-    r_squared = np.square(brownian_path[:, 0]) + np.square(brownian_path[:, 1])
-    averaged = np.cumsum(r_squared) / np.arange(1, len(r_squared) + 1)
-    return averaged
-
-
 def plot_average_r_squared_vs_time(brownian_path):
     t = np.linspace(0, brownian_path.shape[0], num=brownian_path.shape[0])
     plot(t, calc_average_r_squared(brownian_path), "time", "<r^2>", "<r^2> vs. time")
 
 
-def plot_curve_with_fit_and_errors(test, x, error_x, y, error_y):
+def plot_curve_with_fit_and_errors(test, x, error_x, y, error_y, num):
     params, y_fit = curve_fit(test, x, y)
     plot_with_fit_and_errors(x, error_x, y, error_y, y_fit, "Time [s]", "<r^2> [m^2]",
-                             "Average Squared Distance vs. Time")
+                             "Average Squared Distance vs. Time, particle #{}, with errors".format(num))
 
 
-def plot_curve_with_fit(test, x, y):
+def plot_curve_with_fit(test, x, y, num):
     params, y_fit = curve_fit(test, x, y)
-    plot_with_fit(x, y, y_fit, "Time [s]", "<r^2> [m^2]", "Average Squared Distance vs. Time")
+    plot_with_fit(x, y, y_fit, "Time [s]", "<r^2> [m^2]", "Average Squared Distance vs. Time, particle #{}".format(num))
 
 
 def normalize_values(brownian_path):
