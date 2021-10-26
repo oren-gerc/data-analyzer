@@ -9,7 +9,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import os
-from brownian_motion import calc_average_r_squared
 
 pio.templates["custom"] = go.layout.Template(layout=go.Layout(margin=dict(l=20, r=20, t=40, b=0)))
 pio.templates.default = "simple_white+custom"
