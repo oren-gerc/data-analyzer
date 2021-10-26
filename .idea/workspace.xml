@@ -5,7 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca38062f-45b2-4afd-8a68-2b50e694d83e" name="Changes" comment="add drift removal, currently not producing good results.">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brownian_motion.py" beforeDir="false" afterPath="$PROJECT_DIR$/brownian_motion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equations.py" beforeDir="false" afterPath="$PROJECT_DIR$/equations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +30,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="202mXaANnC0W1YZbyjA6CcLW41B" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -24,6 +40,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
@@ -82,6 +99,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add drift removal, currently not producing good results." />

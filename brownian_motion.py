@@ -17,43 +17,51 @@ def drop_drift(x, y, time):
     return x, y
 
 
-def calc_average_r_squared(r_squared):
+def calc_average_r_squared(x, y):
+    r_squared = np.square(x) + np.square(y)
     averaged = np.cumsum(r_squared) / np.arange(1, len(r_squared) + 1)
     return averaged
+
+
+def calc_r_squared_error(x, y, x_error, y_error):
+    return np.sqrt(np.square(2 * x * x_error) + np.square(2 * y * y_error))
 
 
 def analyze_week1():
     # for each particle:
     # read its data, normalize it against drift, plot its r^2 vs time, fit and discover D, plot D vs R of particle
-    particles = [1, 2, 3, 4, 5]
-    for particle in particles:
-        excel_path = r'C:\Users\ORENGER\Desktop\uni\physics-data-analyzer\experiment_data\particle{}.xlsx'.format(
+    goodies = [5]
+    baddies = [1, 2, 3, 4]
+    for particle in range(1, 6):
+        excel_path = r'C:\Users\user\Desktop\lab\physics-data-analyzer\experiment_data\particle{}.xlsx'.format(
             particle)
 
         # read and normalize data
-        trajectory, errors = utils.read_data(excel_path)
-        trajectory = utils.normalize_values(trajectory)
+        x, y, x_error, y_error = utils.read_data(excel_path)
+        x, y = utils.normalize_values(x), utils.normalize_values(y)
 
         # plot trajectory of the particle
-        utils.plot(trajectory[:, 0], trajectory[:, 1], "x", "y",
-                   "2D trajectory of the particle #{}".format(particle))
-        time = np.linspace(0, trajectory.shape[0], num=trajectory.shape[0])
+        utils.plot(x, y, "x", "y", "2D trajectory of the particle #{}".format(particle))
+        time = np.linspace(0, x.shape[0], num=x.shape[0])
 
         # numerically check for drift in both axes, than normalize values
-        trajectory[:, 0], trajectory[:, 1] = drop_drift(trajectory[:, 0], trajectory[:, 1], time)
+        # trajectory[:, 0], trajectory[:, 1] = drop_drift(trajectory[:, 0], trajectory[:, 1], time)
 
         # plot trajectory of the particle without drift (simulated)
-        utils.plot(trajectory[:, 0], trajectory[:, 1], "x", "y",
-                   "2D trajectory of the particle #{}, without drift".format(particle))
+        # utils.plot(trajectory[:, 0], trajectory[:, 1], "x", "y",
+        #            "2D trajectory of the particle #{}, without drift".format(particle))
 
-        # calculate r^2, plot against time
-        r_2 = np.square(trajectory[:, 0]) + np.square(trajectory[:, 1])
-        average_r_2 = calc_average_r_squared(r_2)
+        # plot r^2 vs time, with linear/parabolic fit, depending on drift
+        if particle in goodies:
+            equation = equations.linear_no_intercept
+        else:
+            equation = equations.parabolic_no_intercept
+
+        average_r_2 = calc_average_r_squared(x, y)
+        error_r = calc_r_squared_error(x, y, x_error, y_error)
+        utils.plot_curve_with_fit(equation, time, average_r_2, particle)
         error_t = np.zeros(shape=average_r_2.shape)
-        error_x, error_y = errors[:, 0], errors[:, 1]
-        error_r = utils.calc_r_squared_error(trajectory[:, 0], trajectory[:, 1], error_x, error_y)
-        utils.plot_curve_with_fit(equations.linear, time, average_r_2, particle)
-        utils.plot_curve_with_fit_and_errors(equations.linear, time, error_t, average_r_2, error_r, particle)
+        utils.plot_curve_with_fit_and_errors(equation, time, error_t, average_r_2, error_r, particle)
 
 
 if __name__ == '__main__':
