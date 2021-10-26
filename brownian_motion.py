@@ -13,7 +13,8 @@ def drop_drift(x, y, time):
     slope_y, intercept, r, p, se = linregress(time, y)
     utils.plot(time, x - slope_x * time, "", "", "x vs time")
     utils.plot(time, y - slope_y * time, "", "", "y vs time")
-    return (x - slope_x * time), (y - slope_y * time)
+    # return (x - slope_x * time), (y - slope_y * time)
+    return x, y
 
 
 def calc_average_r_squared(r_squared):

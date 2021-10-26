@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca38062f-45b2-4afd-8a68-2b50e694d83e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/physics-data-analyzer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/physics-data-analyzer.iml" afterDir="false" />
+    <list default="true" id="ca38062f-45b2-4afd-8a68-2b50e694d83e" name="Changes" comment="add drift removal, currently not producing good results.">
       <change beforePath="$PROJECT_DIR$/brownian_motion.py" beforeDir="false" afterPath="$PROJECT_DIR$/brownian_motion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +63,29 @@
       <option name="presentableId" value="Default" />
       <updated>1635251096718</updated>
     </task>
+    <task id="LOCAL‎00001" summary="add drift removal, currently not producing good results.">
+      <created>1635259949440</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1635259949440</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add drift removal, currently not producing good results." />
+    <option name="LAST_COMMIT_MESSAGE" value="add drift removal, currently not producing good results." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
