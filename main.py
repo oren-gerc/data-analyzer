@@ -6,7 +6,6 @@ import utils
 import equations
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
 def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
@@ -31,20 +30,6 @@ def calc_average_r_squared(brownian_path):
 def plot_average_r_squared_vs_time(brownian_path):
     t = np.linspace(0, path.shape[0], num=path.shape[0])
     utils.plot(t, calc_average_r_squared(brownian_path), "time", "<r^2>", "<r^2> vs. time")
-
-
-def plot_brownian_motion(brownian_path):
-    start = brownian_path[:1]
-    stop = brownian_path[-1:]
-    fig = plt.figure()
-    ax = fig.add_subplot()
-    ax.scatter(brownian_path[:, 0], brownian_path[:, 1], c="blue", alpha=0.25, s=0.05)
-    ax.plot(brownian_path[:, 0], brownian_path[:, 1], c="blue", alpha=0.5, lw=0.25)
-    ax.plot(start[:, 0], start[:, 1], c='red', marker='+')
-    ax.plot(stop[:, 0], stop[:, 1], c='black', marker='o')
-    plt.title("Movement in 2D: X vs Y")
-    plt.tight_layout(pad=0)
-    plt.show()
 
 
 def build_particle_path_from_excel():
@@ -88,7 +73,7 @@ if __name__ == '__main__':
 
     path, errors = build_particle_path_from_excel()
     path = normalize_values(path)
-    plot_brownian_motion(path)
+    utils.plot(path[:, 0], path[:, 1], "x", "y", "2D movement of the particle")
 
     time = np.linspace(0, path.shape[0], num=path.shape[0])
     r_2 = calc_average_r_squared(path)
