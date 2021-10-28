@@ -7,13 +7,12 @@ import plotly.graph_objects as go
 import scipy.optimize as opt
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 import os
 
 pio.templates["custom"] = go.layout.Template(layout=go.Layout(margin=dict(l=20, r=20, t=40, b=0)))
 pio.templates.default = "simple_white+custom"
 
-SHOW_GRAPHS = False
+SHOW_GRAPHS = True
 
 
 def read_data(csv_path):
