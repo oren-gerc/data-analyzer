@@ -103,6 +103,7 @@ def plot_curve_with_fit_and_errors(test, x, error_x, y, error_y, num):
 
 def plot_curve_with_fit(test, x, y, num):
     params, y_fit = curve_fit(test, x, y)
+    # create large fit range!
     plot_with_fit(x, y, y_fit, params, "Time [s]", "<r^2> [m^2]",
                   "Average Squared Distance vs. Time, particle #{}".format(num))
 

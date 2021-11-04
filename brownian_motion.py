@@ -6,6 +6,7 @@ import equations
 import numpy as np
 from scipy.stats import linregress
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
@@ -21,28 +22,26 @@ def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
     return drifted_path
 
 
-def drop_drift(x, y, time):
+def drop_drift(x, y):
+    time = np.linspace(0, x.shape[0], num=x.shape[0])
     slope_x, intercept, r, p, se = linregress(time, x)
     slope_y, intercept, r, p, se = linregress(time, y)
-    utils.plot(time, x - slope_x * time, "", "", "x vs time")
-    utils.plot(time, y - slope_y * time, "", "", "y vs time")
+    # utils.plot(time, x - slope_x * time, "", "", "x vs time")
+    # utils.plot(time, y - slope_y * time, "", "", "y vs time")
     return (x - slope_x * time), (y - slope_y * time)
     # return x, y
 
 
-def calc_average_r_squared(x, y):
-    r_squared = np.square(x) + np.square(y)
-    averaged = np.cumsum(r_squared) / np.arange(1, len(r_squared) + 1)
-    return averaged
-
-
-def calc_average_r_squared2(x, y, partitions):
+def calc_average_r_squared(x, y, partitions):
     x_partitions = np.array_split(x, partitions)
     y_partitions = np.array_split(y, partitions)
     assert len(x) == len(y)
-    r_2 = []
-    for i in range(partitions):
-        r_2.append(np.mean(np.square(x_partitions[i]) + np.square(y_partitions[i])))
+    r_2 = np.zeros(int(len(x) / partitions))
+    for j in range(partitions):
+        for i in range(int(len(x) / partitions)):
+            r_2[i] += (np.square(x_partitions[j][i] - x_partitions[j][0]) + np.square(
+                y_partitions[j][i] - y_partitions[j][0]))
+    r_2 = r_2 / partitions
     return r_2
 
 
@@ -53,8 +52,7 @@ def calc_r_squared_error(x, y, x_error, y_error):
 def analyze_week1():
     # for each particle:
     # read its data, normalize it against drift, plot its r^2 vs time, fit and discover D, plot D vs R of particle
-    goodies = [5]
-    baddies = [1, 2, 3, 4]
+    drifted = [1, 2, 3]
     for particle in range(1, 6):
         excel_path = r'C:\Users\user\Desktop\lab\physics-data-analyzer\experiment_data\particle{}.xlsx'.format(
             particle)
@@ -66,23 +64,24 @@ def analyze_week1():
 
         # plot trajectory of the particle
         utils.plot(x, y, "x", "y", "2D trajectory of the particle #{}".format(particle))
-        time = np.linspace(0, x.shape[0], num=x.shape[0]) / frames_per_second
 
-        # # numerically check for drift in both axes, than normalize values
-        # x, y = drop_drift(x, y, time)
-        #
         # # plot trajectory of the particle without drift (simulated)
         # utils.plot(x, y, "x", "y",
         #            "2D trajectory of the particle #{}, without drift".format(particle))
 
         # plot r^2 vs time, with linear/parabolic fit, depending on drift
-        if particle in goodies:
-            equation = equations.linear_no_intercept
-        else:
-            equation = equations.parabolic_no_intercept
+        # if particle in goodies:
+        equation = equations.linear_no_intercept
+        # else:
+        #     equation = equations.parabolic_no_intercept
 
-        average_r_2 = calc_average_r_squared(x, y)
+        # numerically check for drift in both axes, than normalize values
+        if particle in drifted:
+            x, y = drop_drift(x, y)
+
+        average_r_2 = calc_average_r_squared(x, y, 25)
         error_r = calc_r_squared_error(x, y, x_error, y_error)
+        time = np.linspace(0, average_r_2.shape[0], num=average_r_2.shape[0]) / frames_per_second
         utils.plot_curve_with_fit(equation, time, average_r_2, particle)
         error_t = np.zeros(shape=average_r_2.shape)
         utils.plot_curve_with_fit_and_errors(equation, time, error_t, average_r_2, error_r, particle)
@@ -103,7 +102,8 @@ def analyze_week2():
     # decide which are drifted which aren't and marks them in order to fit them
     # fit all paths, save D param from fit
     # plot D against viscosity
-    results = {0: 0, 5: 0, 10: 0, 30: 0, 40: 0, 50: 0, 60: 0, 85: 0, 95: 0}
+    rikuzim = np.array([5, 30, 40, 50, 60, 85, 95])
+    coeffs = []
     frames_per_second = 4.4
     excel_path = r'C:\Users\user\Desktop\lab\physics-data-analyzer\experiment_data\week2.xlsx'
 
@@ -111,19 +111,25 @@ def analyze_week2():
     data = pd.read_excel(excel_path)
     pixel_meter_ratio = 1. / 22.86
 
-    for concentration in results.keys():
+    for concentration in rikuzim:
         # read data, normalize it
         x_col_name = 'x{}'.format(concentration)
         y_col_name = 'y{}'.format(concentration)
         x, y = (data[x_col_name].to_numpy()) * pixel_meter_ratio, (data[y_col_name].to_numpy()) * pixel_meter_ratio
         x, y = utils.normalize_values(x), utils.normalize_values(y)
-        time = np.linspace(0, x.shape[0], num=x.shape[0]) / frames_per_second
-        # plot r^2 vs time, with linear/parabolic fit, depending on drift
-        average_r_2 = calc_average_r_squared(x, y)
-        results[concentration] = utils.curve_fit(equations.parabolic_no_intercept, time, average_r_2)[1]
-    utils.plot_with_fit(results.keys(), results.values(),
-                        *(utils.curve_fit(equations.linear, results.keys(), results.values())),
-                        "D", "R", "D vs. R")
+        x, y = x[~np.isnan(x)], y[~np.isnan(y)]
+
+        # plot movement of particle
+        # utils.plot(x, y, "x", "y", "2D trajectory of the particle #{}".format(concentration))
+
+        average_r_2 = calc_average_r_squared(x, y, 20)
+        time = np.linspace(0, average_r_2.shape[0], num=average_r_2.shape[0]) / frames_per_second
+
+        # utils.plot_curve_with_fit(equations.linear_no_intercept, time, average_r_2, concentration)
+        coeffs.append(utils.curve_fit(equations.linear_no_intercept, time, average_r_2)[0][0])
+
+    # add errors, and make the range better so it will appear smoother
+    utils.plot_curve_with_fit(equations.one_over_x, rikuzim, np.array(coeffs), 1)
 
 
 if __name__ == '__main__':

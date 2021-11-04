@@ -4,10 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca38062f-45b2-4afd-8a68-2b50e694d83e" name="Changes" comment="plot drifted trajectories with parabolic fit">
-      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #7.png" afterDir="false" />
+    <list default="true" id="ca38062f-45b2-4afd-8a68-2b50e694d83e" name="Changes" comment="add analyze week2, new data">
+      <change afterPath="$PROJECT_DIR$/experiment_data/week2.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/experiment_data/weeks22.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #40.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #50.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #60.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #85.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #95.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brownian_motion.py" beforeDir="false" afterPath="$PROJECT_DIR$/brownian_motion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equations.py" beforeDir="false" afterPath="$PROJECT_DIR$/equations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5, with errors.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5, with errors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5.png" beforeDir="false" afterPath="$PROJECT_DIR$/graphs/Average Squared Distance vs. Time, particle #5.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635281092865</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add analyze week2, new data">
+      <created>1635399504233</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1635399504233</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -131,7 +161,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="add drift removal, currently not producing good results." />
     <MESSAGE value="plot drifted trajectories with parabolic fit" />
-    <option name="LAST_COMMIT_MESSAGE" value="plot drifted trajectories with parabolic fit" />
+    <MESSAGE value="add analyze week2, new data" />
+    <option name="LAST_COMMIT_MESSAGE" value="add analyze week2, new data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
