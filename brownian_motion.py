@@ -2,11 +2,10 @@
 Performs data analysis - brownian motion experiment
 """
 import utils
-import equations
+import curve_fit
 import numpy as np
 from scipy.stats import linregress
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
 def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
@@ -33,6 +32,7 @@ def drop_drift(x, y):
 
 
 def calc_average_r_squared(x, y, partitions):
+    # return np.cumsum(self._r_squared) / np.arange(1, len(self._r_squared) - 1)
     x_partitions = np.array_split(x, partitions)
     y_partitions = np.array_split(y, partitions)
     assert len(x) == len(y)
@@ -132,15 +132,18 @@ def analyze_week2():
     utils.plot_curve_with_fit(equations.one_over_x, rikuzim, np.array(coeffs), 1)
 
 
+def plot_brownian_motion():
+    path = create_brownian_motion(T=10000, dt=0.1, mu_x=-0.1, mu_y=-0.1, sigma=0.1, dims=2)
+    utils.plot_motion(path)
+    x, y = path[:, 0], path[:, 1]
+
+    average_r_2 = calc_average_r_squared(x, y, 100)
+    time = np.linspace(0, len(average_r_2), num=len(average_r_2)) / 30
+    utils.plot_curve_with_fit(equations.parabolic_no_intercept, time, average_r_2, 7)
+
+
 if __name__ == '__main__':
     # analyze_week1()
     # analyze_week1_again()
-    analyze_week2()
-
-    # path = create_brownian_motion(T=10000, dt=0.1, mu_x=-0.1, mu_y=-0.1, sigma=0.1, dims=2)
-    # utils.plot_motion(path)
-    # x, y = path[:, 0], path[:, 1]
-    #
-    # average_r_2 = calc_average_r_squared2(x, y, 100)
-    # time = np.linspace(0, len(average_r_2), num=len(average_r_2)) / 30
-    # utils.plot_curve_with_fit(equations.parabolic_no_intercept, time, average_r_2, 7)
+    # analyze_week2()
+    pass
