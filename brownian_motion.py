@@ -6,6 +6,12 @@ import CurveFit
 import numpy as np
 from scipy.stats import linregress
 import pandas as pd
+import equations
+
+
+def normalize(vec):
+    # normalizes the x and y values to start with zero
+    return vec - vec[0]
 
 
 def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
@@ -31,18 +37,33 @@ def drop_drift(x, y):
     # return x, y
 
 
-def calc_average_r_squared(x, y, partitions):
-    # return np.cumsum(self._r_squared) / np.arange(1, len(self._r_squared) - 1)
-    x_partitions = np.array_split(x, partitions)
-    y_partitions = np.array_split(y, partitions)
-    assert len(x) == len(y)
-    r_2 = np.zeros(int(len(x) / partitions))
-    for j in range(partitions):
-        for i in range(int(len(x) / partitions)):
-            r_2[i] += (np.square(x_partitions[j][i] - x_partitions[j][0]) + np.square(
-                y_partitions[j][i] - y_partitions[j][0]))
-    r_2 = r_2 / partitions
-    return r_2
+def calculate_r_squared(x, y):
+    r_squared = np.square(normalize(x)) + np.square(normalize(y))
+    return np.cumsum(r_squared) / np.arange(1, len(r_squared) + 1)
+
+
+def min_length(arr_2d):
+    min_len = 18000000
+    for i in range(len(arr_2d)):
+        if int(len(arr_2d[i])) < min_len:
+            min_len = len(arr_2d[i])
+    return min_len
+
+
+def cut_array_equally(arr, num_chunks):
+    partitions = np.array_split(arr, num_chunks)
+    minimal_length = min_length(partitions)
+    for i, particle in enumerate(partitions):
+        partitions[i] = particle[:minimal_length]
+    return partitions
+
+
+def calc_average_r_squared(x, y, num_fictive_particles):
+    x_partitions = cut_array_equally(x, num_fictive_particles)
+    y_partitions = cut_array_equally(y, num_fictive_particles)
+    r_squared_vectors = [calculate_r_squared(x_partitions[i], y_partitions[i])
+                         for i in range(num_fictive_particles)]
+    return np.average(r_squared_vectors, axis=0)
 
 
 def calc_r_squared_error(x, y, x_error, y_error):
@@ -54,7 +75,7 @@ def analyze_week1():
     # read its data, normalize it against drift, plot its r^2 vs time, fit and discover D, plot D vs R of particle
     drifted = [1, 2, 3]
     for particle in range(1, 6):
-        excel_path = r'C:\Users\user\Desktop\lab\physics-data-analyzer\experiment_data\particle{}.xlsx'.format(
+        excel_path = r'C:\Users\user\Desktop\lab\data-analyzer\experiment_data\week1\particle{}.xlsx'.format(
             particle)
         frames_per_second = 30
 
@@ -85,16 +106,6 @@ def analyze_week1():
         utils.plot_curve_with_fit(equation, time, average_r_2, particle)
         error_t = np.zeros(shape=average_r_2.shape)
         utils.plot_curve_with_fit_and_errors(equation, time, error_t, average_r_2, error_r, particle)
-
-        # average_r_2 = calc_average_r_squared2(x, y, 200)
-        # time = np.linspace(0, len(average_r_2), num=len(average_r_2)) / 30
-        # utils.plot_curve_with_fit(equations.linear, time, average_r_2, particle)
-
-
-def analyze_week1_again():
-    # use 30% concentrations to plot r^2 vs time
-    # than D vs radius
-    pass
 
 
 def analyze_week2():
@@ -143,7 +154,5 @@ def plot_brownian_motion():
 
 
 if __name__ == '__main__':
-    # analyze_week1()
-    # analyze_week1_again()
+    analyze_week1()
     # analyze_week2()
-    pass

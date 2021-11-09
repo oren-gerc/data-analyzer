@@ -1,5 +1,0 @@
-Average Squared Distance vs. Time, particle #1 fit parameters:  [0.2148426  1.12374874]
-Average Squared Distance vs. Time, particle #2 fit parameters:  [ 0.06460005 -0.00742173]
-Average Squared Distance vs. Time, particle #3 fit parameters:  [0.05143643 0.2049005 ]
-Average Squared Distance vs. Time, particle #4 fit parameters:  [0.02999558 0.00276272]
-Average Squared Distance vs. Time, particle #5 fit parameters:  [0.51800914]
