@@ -25,11 +25,11 @@ def calc_average_r_squared(x, y, partitions):
     return r_2
 
 
-def analyze_week3():
+def analyze_effect_of_temperature():
     path = "C:\\Users\\ORENGER\\Desktop\\uni\\physics-data-analyzer\\experiment_data\\week3\\measurements.xlsx"
     data_handler = DataHandler.DataHandler(path)
     radii = [17, 20, 12, 13, 14, 15, 17, 12]
-    temperatures = [1, 2, 3, 4, 5, 6, 7, 8]
+    temperatures = [17.3, 21.4, 25.5, 29.8, 34.8, 42.4, 45]
     for temperature in temperatures:
         # get data and normalize it
         x, y = data_handler.get_columns(['x{}'.format(temperature), 'y{}'.format(temperature)])
@@ -45,4 +45,4 @@ def analyze_week3():
 
 
 if __name__ == '__main__':
-    analyze_week3()
+    analyze_effect_of_temperature()
