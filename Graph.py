@@ -72,7 +72,7 @@ class Graph:
 
     def plot_with_fit_and_errors(self):
         fig = go.Figure(
-            [go.Scatter(x=x, y=y,
+            [go.Scatter(x=self._x, y=self._y,
                         error_x=dict(type='data', array=self._x_err, thickness=0.06, visible=True),
                         error_y=dict(type='data', array=self._y_err, thickness=0.06, visible=True),
                         name="Experiment", showlegend=True,
