@@ -2,7 +2,7 @@
 Performs data analysis - brownian motion experiment
 """
 import utils
-import curve_fit
+import CurveFit
 import numpy as np
 from scipy.stats import linregress
 import pandas as pd

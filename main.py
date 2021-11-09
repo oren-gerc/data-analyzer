@@ -2,7 +2,10 @@
 Runs analysis according to specific demands
 """
 
-import DataHandler
+from DataHandler import DataHandler
+from Graph import Graph
+from CurveFit import CurveFit
+import equations
 import numpy as np
 
 
@@ -26,10 +29,11 @@ def calc_average_r_squared(x, y, partitions):
 
 
 def analyze_effect_of_temperature():
-    path = "C:\\Users\\ORENGER\\Desktop\\uni\\physics-data-analyzer\\experiment_data\\week3\\measurements.xlsx"
-    data_handler = DataHandler.DataHandler(path)
+    path = "C:\\Users\\user\\Desktop\\lab\\data-analyzer\\experiment_data\\week3\\measurements.xlsx"
+    data_handler = DataHandler(path)
     radii = [17, 20, 12, 13, 14, 15, 17, 12]
     temperatures = [17.3, 21.4, 25.5, 29.8, 34.8, 42.4, 45]
+    values = []
     for temperature in temperatures:
         # get data and normalize it
         x, y = data_handler.get_columns(['x{}'.format(temperature), 'y{}'.format(temperature)])
@@ -41,7 +45,14 @@ def analyze_effect_of_temperature():
         # save r^2 back to excel
         data_handler.add_column_to_excel('r{}'.format(temperature), average_r_squared)
 
-        # fit, save params
+        # get fit params
+        D = CurveFit(x, y, equations.linear).get_fit_params()
+        values.append(D[0])
+
+    print(values)
+    graph = Graph(np.array(temperatures), np.array(values))
+    # calculate errors for values and temperatures
+    # set lables for axes
 
 
 if __name__ == '__main__':
