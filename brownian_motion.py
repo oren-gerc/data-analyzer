@@ -2,7 +2,6 @@
 Performs data analysis - brownian motion experiment
 """
 import utils
-import CurveFit
 import numpy as np
 from scipy.stats import linregress
 import pandas as pd
@@ -27,16 +26,6 @@ def create_brownian_motion(T, dt, mu_x, mu_y, sigma, dims=2):
     return drifted_path
 
 
-def drop_drift(x, y):
-    time = np.linspace(0, x.shape[0], num=x.shape[0])
-    slope_x, intercept, r, p, se = linregress(time, x)
-    slope_y, intercept, r, p, se = linregress(time, y)
-    # utils.plot(time, x - slope_x * time, "", "", "x vs time")
-    # utils.plot(time, y - slope_y * time, "", "", "y vs time")
-    return (x - slope_x * time), (y - slope_y * time)
-    # return x, y
-
-
 def calculate_r_squared(x, y):
     r_squared = np.square(normalize(x)) + np.square(normalize(y))
     return np.cumsum(r_squared) / np.arange(1, len(r_squared) + 1)
@@ -58,11 +47,20 @@ def cut_array_equally(arr, num_chunks):
     return partitions
 
 
+def drop_drift(x):
+    time = np.linspace(0, x.shape[0], num=x.shape[0])
+    slope_x, intercept, r, p, se = linregress(time, x)
+    return (x - slope_x * time)
+
+
 def calc_average_r_squared(x, y, num_fictive_particles):
     x_partitions = cut_array_equally(x, num_fictive_particles)
     y_partitions = cut_array_equally(y, num_fictive_particles)
-    r_squared_vectors = [calculate_r_squared(x_partitions[i], y_partitions[i])
-                         for i in range(num_fictive_particles)]
+    r_squared_vectors = []
+    for i in range(num_fictive_particles):
+        a = drop_drift(x_partitions[i])
+        b = drop_drift(y_partitions[i])
+        r_squared_vectors.append(calculate_r_squared(a, b))
     return np.average(r_squared_vectors, axis=0)
 
 
@@ -97,9 +95,6 @@ def analyze_week1():
         #     equation = equations.parabolic_no_intercept
 
         # numerically check for drift in both axes, than normalize values
-        if particle in drifted:
-            x, y = drop_drift(x, y)
-
         average_r_2 = calc_average_r_squared(x, y, 25)
         error_r = calc_r_squared_error(x, y, x_error, y_error)
         time = np.linspace(0, average_r_2.shape[0], num=average_r_2.shape[0]) / frames_per_second

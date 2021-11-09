@@ -17,6 +17,6 @@ class CurveFit:
         return self._fit_params
 
     def get_fit(self):
-        x_fit = np.linspace(np.amin(self._x), np.amax(self._x), num=1000)
+        x_fit = np.linspace(np.amin(self._x), np.amax(self._x), num=10000)
         y_fit = self._fit_func(x_fit, *self._fit_params)
         return x_fit, y_fit
