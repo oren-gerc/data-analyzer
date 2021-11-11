@@ -185,7 +185,20 @@ def analyze_diffusion_coefficient_vs_time():
     print("Diffusion Coefficient = ", D)
 
 
+def analyze_diffusion():
+    
+    # for each video file:
+    # get it's data as frame_number images
+    # from each image, get average absolute radius of outer circle (vector size = num of frames)
+
+    # plot all vectors on the same plot
+    # calculate D out of fit
+    # plot D as a function of concentration/viscosity
+    pass
+
+
 if __name__ == '__main__':
     # analyze_diffusion_coeff_vs_time()
     # analyze_effect_of_viscosity()
-    analyze_effect_of_temperature()
+    # analyze_effect_of_temperature()
+    analyze_diffusion()
